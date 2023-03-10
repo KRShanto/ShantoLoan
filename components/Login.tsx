@@ -3,6 +3,7 @@ import { SendType } from "./utils/form/Form";
 import usePopupStore from "../stores/popup";
 import PopupForm from "./utils/PopupForm";
 import Input from "./utils/form/Input";
+import Password from "./utils/form/Password";
 import useAuthStore from "@/stores/auth";
 
 export default function Login() {
@@ -52,7 +53,13 @@ export default function Login() {
       {error && <div className="error">{error}</div>}
 
       <Input value={username} setValue={setUsername} label="Username" />
-      <Input value={password} setValue={setPassword} label="Password" />
+      {/* <Input value={password} setValue={setPassword} label="Password" /> */}
+      <Password
+        value={password}
+        setValue={setPassword}
+        label="Password"
+        generator={false}
+      />
 
       <button type="submit" className="btn green">
         Login

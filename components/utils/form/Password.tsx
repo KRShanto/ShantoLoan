@@ -13,7 +13,8 @@ export default function Password({
   disabled,
   readOnly,
   autoFocus,
-}: InputProps) {
+  generator = true,
+}: InputProps & { generator?: boolean }) {
   const [showPassword, setShowPassword] = useState(false);
 
   function generatePassword() {
@@ -48,13 +49,15 @@ export default function Password({
           checked={showPassword}
           setChecked={setShowPassword}
         />
-        <button
-          type="button"
-          className="generate-password"
-          onClick={generatePassword}
-        >
-          Generate Password
-        </button>
+        {generator && (
+          <button
+            type="button"
+            className="generate-password"
+            onClick={generatePassword}
+          >
+            Generate Password
+          </button>
+        )}
       </div>
     </Input>
   );
