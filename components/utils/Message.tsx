@@ -13,9 +13,8 @@ export default function Message({
   };
 }) {
   return (
-    <Popup>
+    <Popup crossIcon={true}>
       <div className={`message ${type}`}>
-        {/* <p className="msg">{msg}</p> */}
         <h3 className="title">{msg.title}</h3>
         <p className="body">{msg.body}</p>
       </div>
