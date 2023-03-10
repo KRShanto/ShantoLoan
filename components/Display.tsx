@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import useAuthState from "@/stores/auth";
-import { ReturnedJsonType } from "@/types/json";
 import usePopupStore from "@/stores/popup";
 import { LoanType } from "@/types/loan";
 import { useRouter } from "next/router";
@@ -11,21 +9,24 @@ import moment from "moment";
 
 export default function Display() {
   const [localLoans, setLocalLoans] = useState<LoanType[]>([]);
-  const { username, password } = useAuthState((state) => state);
   const { openPopup, openMessage } = usePopupStore((state) => state);
   const { setReturnLoan } = useReturnLoanStore((state) => state);
   const { loans } = useLoansStore((state) => state);
-  const { users } = useUsersStore((state) => state);
   const router = useRouter();
 
-  useEffect(() => {
-    if (loans && router.query.user) {
-      const userName = router.query.user;
-      const userLoans = loans.filter((loan) => loan.user.name === userName);
+  const { user } = router.query;
 
-      setLocalLoans(userLoans);
+  useEffect(() => {
+    if (loans && user) {
+      // const userLoans = loans.filter((loan) => loan.user.name === user);
+      if (user === "All") {
+        setLocalLoans(loans);
+      } else {
+        const userLoans = loans.filter((loan) => loan.user.name === user);
+        setLocalLoans(userLoans);
+      }
     }
-  }, [loans, router]);
+  }, [loans, user]);
 
   return (
     <div className="display">
@@ -49,7 +50,8 @@ export default function Display() {
       <table className="loans">
         <thead>
           <tr>
-            <th>Name</th>
+            {/* <th>Name</th> */}
+            {user === "All" && <th>Name</th>}
             <th>Date</th>
             <th>Why</th>
             <th>Amount</th>
@@ -65,7 +67,8 @@ export default function Display() {
                 loan.returnDate ? "returned" : loan.amount > 0 ? "took" : "gave"
               }
             >
-              <td className="name">{loan.user.name}</td>
+              {/* <td className="name">{loan.user.name}</td> */}
+              {user === "All" && <td className="name">{loan.user.name}</td>}
               <td className="date">
                 {moment(loan.date).format("DD MMMM YYYY")}
               </td>

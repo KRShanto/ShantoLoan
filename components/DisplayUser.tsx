@@ -8,6 +8,10 @@ export default function DisplayUser() {
   return (
     <>
       <div className="users">
+        <Link className="user" href="All">
+          All
+        </Link>
+
         {users.map((user) => (
           <Link className="user" key={user._id} href={user.name}>
             {user.name}
