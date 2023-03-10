@@ -1,0 +1,34 @@
+header {
+  background-color: rgb(16, 16, 16);
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .logo {
+    color: gold;
+    font-size: 2rem;
+    font-family: "Lobster", cursive;
+  }
+
+  .options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+}
+
+// 500px
+@media screen and (max-width: 500px) {
+  header {
+    .logo {
+      font-size: 1.8rem;
+    }
+
+    .options {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  }
+}

@@ -1,0 +1,102 @@
+$returned: rgb(2, 74, 49);
+$took: rgb(111, 0, 52);
+$gave: rgb(120, 46, 0);
+
+.display {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 1.1rem;
+  .user {
+    width: 90vw;
+    // border: 2px solid red;
+    margin: 1rem auto;
+
+    .for {
+      color: rgb(0, 149, 255);
+    }
+  }
+
+  .color-info {
+    width: 90vw;
+    margin: 1rem auto;
+    // border: 2px solid red;
+    // width: ;
+
+    p {
+      display: flex;
+      flex-direction: row;
+      width: 15rem;
+      //   border: 2px solid blue;
+      justify-content: space-between;
+      align-items: center;
+      margin: 0.5rem 0;
+    }
+
+    span {
+      //   max-width: 50px;
+      //   min-width: 50px;
+      width: 1.5rem;
+      //   max-height: 50px;
+      //   min-height: 50px;
+      height: 1.5rem;
+      display: inline-block;
+      border-radius: 50%;
+      //   border: 2px solid red;
+      background-color: #fff;
+    }
+
+    .took {
+      background-color: $took;
+    }
+
+    .gave {
+      background-color: $gave;
+    }
+
+    .returned {
+      background-color: $returned;
+    }
+  }
+
+  .loans {
+    $white: #949494;
+    // border: 2px solid red;
+    margin: 1rem auto;
+    width: 90vw;
+    border-collapse: collapse;
+    // border-radius: 10px;
+    overflow: hidden;
+    // box-shadow: 0 0 1px white;
+
+    th {
+      border: 1px solid $white;
+      padding: 0.5rem;
+      background-color: rgb(0, 56, 111);
+      text-align: center;
+      font-size: 1.2rem;
+    }
+
+    td {
+      border: 1px solid $white;
+      padding: 0.5rem;
+      background-color: $took;
+      text-align: center;
+    }
+
+    .returned {
+      td {
+        background-color: $returned;
+      }
+    }
+
+    .gave {
+      td {
+        background-color: $gave;
+      }
+    }
+
+    .return {
+      padding: 0.2rem 1rem;
+      font-size: 1rem;
+    }
+  }
+}

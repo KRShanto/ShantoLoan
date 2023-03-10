@@ -1,0 +1,100 @@
+.btn {
+  padding: 7px 20px;
+  font-size: 18px;
+  border: none;
+  outline: none;
+  border-radius: 28px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  text-shadow: 0px 0px 1px black;
+}
+
+.blue {
+  background-image: linear-gradient(to bottom, rgb(0, 140, 255), #0026ff);
+
+  &:hover {
+    background-image: linear-gradient(to bottom, #0026ff, rgb(0, 140, 255));
+  }
+}
+
+.red {
+  background-image: linear-gradient(
+    to bottom,
+    rgb(255, 92, 141),
+    rgb(255, 0, 81)
+  );
+
+  &:hover {
+    background-image: linear-gradient(
+      to bottom,
+      rgb(255, 0, 81),
+      rgb(255, 92, 141)
+    );
+  }
+}
+
+.orange {
+  background-image: linear-gradient(
+    to bottom,
+    rgb(255, 130, 5),
+    rgb(255, 38, 0)
+  );
+
+  &:hover {
+    background-image: linear-gradient(
+      to bottom,
+      rgb(255, 38, 0),
+      rgb(255, 130, 5)
+    );
+  }
+}
+
+.green {
+  background-image: linear-gradient(
+    to bottom,
+    rgb(148, 252, 110),
+    rgb(2, 142, 39)
+  );
+
+  &:hover {
+    background-image: linear-gradient(
+      to bottom,
+      rgb(2, 142, 39),
+      rgb(148, 252, 110)
+    );
+  }
+}
+
+.skyblue {
+  background-image: linear-gradient(
+    to bottom,
+    rgb(0, 255, 255),
+    rgb(0, 140, 255)
+  );
+
+  &:hover {
+    background-image: linear-gradient(
+      to bottom,
+      rgb(0, 140, 255),
+      rgb(0, 255, 255)
+    );
+  }
+}
+
+.disable {
+  cursor: not-allowed;
+  background-image: linear-gradient(
+    to bottom,
+    rgb(171, 171, 171),
+    rgb(69, 68, 68)
+  );
+}
+
+@media (max-width: 600px) {
+  .btn {
+    padding: 6px 15px;
+    font-size: 16px;
+    // border-radius: 28px;
+  }
+}
