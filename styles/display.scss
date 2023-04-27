@@ -94,9 +94,17 @@ $gave: rgb(120, 46, 0);
       }
     }
 
-    .return {
-      padding: 0.2rem 1rem;
-      font-size: 1rem;
+    .options {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+
+      button {
+        padding: 0.2rem 1rem;
+        font-size: 1rem;
+      }
     }
   }
 }

@@ -2,16 +2,19 @@ import React, { useEffect, useState } from "react";
 import usePopupStore from "@/stores/popup";
 import { LoanType } from "@/types/loan";
 import { useRouter } from "next/router";
-import useUsersStore from "@/stores/users";
 import useReturnLoanStore from "@/stores/returnLoan";
+import useAuthStore from "@/stores/auth";
 import useLoansStore from "@/stores/loans";
 import moment from "moment";
+import { SendType } from "./utils/form/Form";
+import PostButton from "./utils/PostButton";
 
 export default function Display() {
   const [localLoans, setLocalLoans] = useState<LoanType[]>([]);
   const { openPopup } = usePopupStore((state) => state);
   const { setReturnLoan } = useReturnLoanStore((state) => state);
   const { loans } = useLoansStore((state) => state);
+  const { username, password } = useAuthStore((state) => state);
   const router = useRouter();
 
   const { user } = router.query;
@@ -28,6 +31,11 @@ export default function Display() {
       }
     }
   }, [loans, user]);
+
+  // remove the id from state
+  function deleteId(id: string) {
+    setLocalLoans((loans) => loans.filter((loan) => loan._id !== id));
+  }
 
   return (
     <div className="display">
@@ -88,6 +96,15 @@ export default function Display() {
                 >
                   Return
                 </button>
+
+                <PostButton
+                  body={{ loanId: loan._id, username, password }}
+                  path="/api/delete"
+                  className="delete btn red"
+                  afterPost={() => deleteId(loan._id)}
+                >
+                  Delete
+                </PostButton>
               </td>
             </tr>
           ))}
