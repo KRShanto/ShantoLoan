@@ -7,7 +7,6 @@ $gave: rgb(120, 46, 0);
   font-size: 1.5rem;
   .user {
     width: 90vw;
-    // border: 2px solid red;
     margin: 1rem auto;
 
     .for {
@@ -18,29 +17,21 @@ $gave: rgb(120, 46, 0);
   .color-info {
     width: 90vw;
     margin: 1rem auto;
-    // border: 2px solid red;
-    // width: ;
 
     p {
       display: flex;
       flex-direction: row;
       width: 15rem;
-      //   border: 2px solid blue;
       justify-content: space-between;
       align-items: center;
       margin: 0.5rem 0;
     }
 
     span {
-      //   max-width: 50px;
-      //   min-width: 50px;
       width: 1.5rem;
-      //   max-height: 50px;
-      //   min-height: 50px;
       height: 1.5rem;
       display: inline-block;
       border-radius: 50%;
-      //   border: 2px solid red;
       background-color: #fff;
     }
 
@@ -59,13 +50,10 @@ $gave: rgb(120, 46, 0);
 
   .loans {
     $white: #949494;
-    // border: 2px solid red;
     margin: 1rem auto;
     width: 90vw;
     border-collapse: collapse;
-    // border-radius: 10px;
     overflow: hidden;
-    // box-shadow: 0 0 1px white;
 
     th {
       border: 1px solid $white;

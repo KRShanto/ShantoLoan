@@ -48,7 +48,6 @@
   }
 
   .checkbox {
-    // border: 2px solid green;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -95,7 +94,6 @@
 
       .select-options {
         display: flex;
-
         transform: scaleY(0);
         flex-direction: column;
         position: absolute;
@@ -108,11 +106,9 @@
         transform-origin: top;
 
         .option {
-          // padding: 7px 20px;
           font-size: 18px;
           border: none;
           outline: none;
-          // border-radius: 28px;
           color: white;
           font-weight: bold;
           cursor: pointer;
@@ -140,7 +136,6 @@
 // 600px
 @media (max-width: 600px) {
   .form {
-    // width: 80%;
     .label-input {
       input {
         width: 100%;
