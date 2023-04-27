@@ -18,7 +18,6 @@ export default function Display() {
 
   useEffect(() => {
     if (loans && user) {
-      // const userLoans = loans.filter((loan) => loan.user.name === user);
       if (user === "All") {
         setLocalLoans(loans);
       } else {

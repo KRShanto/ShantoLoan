@@ -14,8 +14,6 @@ export default function Login() {
   const { setup } = useAuthStore((state) => state);
   const { closePopup } = usePopupStore((state) => state);
 
-  // const { openMessage } = usePopupStore((state) => state);
-
   async function handleCreate(send: SendType) {
     if (username === "") {
       setError("You need to specify Username");
@@ -43,17 +41,12 @@ export default function Login() {
   }
 
   return (
-    <PopupForm
-      submitHandler={handleCreate}
-      // hideAfterSubmit={false}
-      crossIcon={false}
-    >
+    <PopupForm submitHandler={handleCreate} crossIcon={false}>
       <div className="heading">Login</div>
 
       {error && <div className="error">{error}</div>}
 
       <Input value={username} setValue={setUsername} label="Username" />
-      {/* <Input value={password} setValue={setPassword} label="Password" /> */}
       <Password
         value={password}
         setValue={setPassword}

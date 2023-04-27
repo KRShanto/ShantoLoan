@@ -13,7 +13,7 @@ export default function Return() {
   const { closePopup } = usePopupStore((state) => state);
   const { returnLoan, setReturnLoan } = useReturnLoanStore((state) => state);
   const { username, password } = useAuthStore((state) => state);
-  const { setLoans } = useLoansStore((state) => state);
+  const { loans, setLoans } = useLoansStore((state) => state);
 
   const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
   const [error, setError] = useState<string | null>(null);
@@ -30,23 +30,20 @@ export default function Return() {
 
     if (json.type === "SUCCESS") {
       closePopup();
-      //   @ts-ignore
+
       // update the state
-      setLoans((loans) => {
-        const newLoans = loans.map((loan: LoanType) => {
-          if (loan._id === returnLoan._id) {
-            return {
-              ...loan,
-              returnDate: date,
-            };
-          }
+      const newLoans = loans.map((loan: LoanType) => {
+        if (loan._id === returnLoan._id) {
+          return {
+            ...loan,
+            returnDate: new Date(date),
+          };
+        }
 
-          return loan;
-        });
-
-        return newLoans;
+        return loan;
       });
 
+      setLoans(newLoans);
       setReturnLoan(null);
     } else {
       setError(json.msg || "Unknown Error!!!");

@@ -11,13 +11,15 @@ import useLoansStore from "@/stores/loans";
 import useAuthStore from "@/stores/auth";
 
 export default function App({ Component, pageProps }: AppProps) {
-  const { loading } = useLoadingStore((state) => state);
+  const { loading, turnOff, turnOn } = useLoadingStore((state) => state);
   const { popup, openPopup } = usePopupStore((state) => state);
   const { setUsers } = useUsersStore((state) => state);
   const { setLoans } = useLoansStore((state) => state);
   const { setup, username, password } = useAuthStore((state) => state);
 
   async function fetcher(url: string) {
+    turnOn();
+
     const res = await fetch(url, {
       method: "POST",
       headers: {
@@ -31,10 +33,12 @@ export default function App({ Component, pageProps }: AppProps) {
 
     const json = await res.json();
 
+    turnOff();
+
     if (json.type === "SUCCESS") {
       return json.data;
     } else {
-      console.log("Error from server: ", json);
+      console.error("Error from server: ", json);
       return null;
     }
   }
@@ -74,7 +78,6 @@ export default function App({ Component, pageProps }: AppProps) {
       fetchUsers();
       fetchLoans();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [username, password]);
 
   return (
