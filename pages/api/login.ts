@@ -6,12 +6,12 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const { username, password } = req.body;
 
   // Check if the user has access
-  if (!checkUser(username, password)) {
+  if (checkUser(username, password)) {
+    return response(res, { type: "SUCCESS", msg: "Login successful" });
+  } else {
     return response(res, {
       type: "UNAUTHORIZED",
       msg: "You don't have access",
     });
-  } else {
-    return response(res, { type: "SUCCESS", msg: "Login successful" });
   }
 }
