@@ -35,9 +35,6 @@ export default function Login() {
     } else {
       setError(json.msg || "Unknown Error!!!");
     }
-
-    setUsername("");
-    setPassword("");
   }
 
   return (

@@ -10,7 +10,7 @@ export default function Create() {
   const [name, setName] = useState("");
   const [error, setError] = useState("");
 
-  const { closePopup, openMessage } = usePopupStore((state) => state);
+  const { closePopup } = usePopupStore((state) => state);
   const { username, password } = useAuthStore((state) => state);
 
   const { addUser } = useUsersStore((state) => state);
@@ -31,8 +31,6 @@ export default function Create() {
     } else {
       setError(json.msg || "Unknown!!!");
     }
-
-    setName("");
   }
 
   return (

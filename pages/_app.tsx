@@ -17,9 +17,12 @@ export default function App({ Component, pageProps }: AppProps) {
   const { setLoans } = useLoansStore((state) => state);
   const { setup, username, password } = useAuthStore((state) => state);
 
+  // fetcher function to fetch data from the server
   async function fetcher(url: string) {
+    // turn on the loading spinner
     turnOn();
 
+    // fetch the data
     const res = await fetch(url, {
       method: "POST",
       headers: {
@@ -31,8 +34,10 @@ export default function App({ Component, pageProps }: AppProps) {
       }),
     });
 
+    // get the json data
     const json = await res.json();
 
+    // turn off the loading spinner
     turnOff();
 
     if (json.type === "SUCCESS") {
@@ -43,6 +48,7 @@ export default function App({ Component, pageProps }: AppProps) {
     }
   }
 
+  // fetches the users
   async function fetchUsers() {
     const users = await fetcher("/api/get-users");
 
@@ -51,6 +57,7 @@ export default function App({ Component, pageProps }: AppProps) {
     }
   }
 
+  // fetches the loans
   async function fetchLoans() {
     const loans = await fetcher("/api/get");
 
@@ -64,15 +71,17 @@ export default function App({ Component, pageProps }: AppProps) {
     const username = sessionStorage.getItem("username");
     const password = sessionStorage.getItem("password");
 
+    // if the username and password exists, then setup the auth store
     if (username && password) {
       setup(username, password);
-    } else {
+    }
+    // else open the login popup
+    else {
       openPopup("Login");
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // fetch the users and loans when the username and password changes
   useEffect(() => {
     if (username && password) {
       fetchUsers();

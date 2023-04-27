@@ -9,7 +9,7 @@ import moment from "moment";
 
 export default function Display() {
   const [localLoans, setLocalLoans] = useState<LoanType[]>([]);
-  const { openPopup, openMessage } = usePopupStore((state) => state);
+  const { openPopup } = usePopupStore((state) => state);
   const { setReturnLoan } = useReturnLoanStore((state) => state);
   const { loans } = useLoansStore((state) => state);
   const router = useRouter();
@@ -19,8 +19,10 @@ export default function Display() {
   useEffect(() => {
     if (loans && user) {
       if (user === "All") {
+        // if the user is All, then show all the loans
         setLocalLoans(loans);
       } else {
+        // else show only the loans for that user
         const userLoans = loans.filter((loan) => loan.user.name === user);
         setLocalLoans(userLoans);
       }
@@ -49,7 +51,6 @@ export default function Display() {
       <table className="loans">
         <thead>
           <tr>
-            {/* <th>Name</th> */}
             {user === "All" && <th>Name</th>}
             <th>Date</th>
             <th>Why</th>
@@ -66,22 +67,16 @@ export default function Display() {
                 loan.returnDate ? "returned" : loan.amount > 0 ? "took" : "gave"
               }
             >
-              {/* <td className="name">{loan.user.name}</td> */}
               {user === "All" && <td className="name">{loan.user.name}</td>}
               <td className="date">
                 {moment(loan.date).format("DD MMMM YYYY")}
               </td>
               <td className="why">{loan.why}</td>
-              <td className="amount">
-                {
-                  // use comma
-                  loan.amount.toLocaleString()
-                }
-              </td>
+              <td className="amount">{loan.amount.toLocaleString()}</td>
               <td className="returnDate">
                 {loan.returnDate
                   ? moment(loan.returnDate).format("DD MMMM YYYY")
-                  : "Not Returned"}
+                  : "Not Returned :("}
               </td>
               <td className="options">
                 <button

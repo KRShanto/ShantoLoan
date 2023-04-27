@@ -9,6 +9,7 @@ import useUsersStore from "@/stores/users";
 import useLoansStore from "@/stores/loans";
 import { useRouter } from "next/router";
 
+// Create a new loan
 export default function Create() {
   const router = useRouter();
 
@@ -28,14 +29,16 @@ export default function Create() {
   const [error, setError] = useState("");
 
   async function handleCreate(send: SendType) {
+    //  check if the fields are empty
     if (amount === "" || date === "" || user === "" || why === "") {
       setError("Fields Amount, Date, Why, User are required");
       return;
     }
 
-    // grap the id of the user
+    // grab the id of the user
     const id = users.find((u) => u.name === user)?._id;
 
+    // send the request
     const json = await send("/api/create", {
       amount,
       why,
@@ -48,12 +51,10 @@ export default function Create() {
     if (json.type !== "SUCCESS") {
       setError(json.msg || "Unknown Error!!!");
     } else {
+      // add the loan to the state and close the popup
       addLoan(json.data);
       closePopup();
     }
-
-    setAmount("");
-    setWhy("");
   }
 
   return (

@@ -1,18 +1,17 @@
 import response from "@/lib/response";
 import { NextApiRequest, NextApiResponse } from "next";
-
-const USERNAME = process.env.USERNAME;
-const PASSWORD = process.env.PASSWORD;
+import checkUser from "@/lib/checkUser";
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const { username, password } = req.body;
 
-  if (username === USERNAME && password === PASSWORD) {
-    response(res, { type: "SUCCESS", msg: "Login successful" });
-  } else {
-    response(res, {
+  // Check if the user has access
+  if (!checkUser(username, password)) {
+    return response(res, {
       type: "UNAUTHORIZED",
-      msg: "Invalid username or password",
+      msg: "You don't have access",
     });
+  } else {
+    return response(res, { type: "SUCCESS", msg: "Login successful" });
   }
 }
