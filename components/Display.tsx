@@ -87,24 +87,26 @@ export default function Display() {
                   : "Not Returned :("}
               </td>
               <td className="options">
-                <button
-                  className="return btn skyblue"
-                  onClick={() => {
-                    setReturnLoan(loan);
-                    openPopup("Return");
-                  }}
-                >
-                  Return
-                </button>
+                <div className="inner-options">
+                  <button
+                    className="return btn skyblue"
+                    onClick={() => {
+                      setReturnLoan(loan);
+                      openPopup("Return");
+                    }}
+                  >
+                    Return
+                  </button>
 
-                <PostButton
-                  body={{ loanId: loan._id, username, password }}
-                  path="/api/delete"
-                  className="delete btn red"
-                  afterPost={() => deleteId(loan._id)}
-                >
-                  Delete
-                </PostButton>
+                  <PostButton
+                    body={{ loanId: loan._id, username, password }}
+                    path="/api/delete"
+                    className="delete btn red"
+                    afterPost={() => deleteId(loan._id)}
+                  >
+                    Delete
+                  </PostButton>
+                </div>
               </td>
             </tr>
           ))}
