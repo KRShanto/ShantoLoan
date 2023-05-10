@@ -22,7 +22,7 @@ export default function History() {
               <div key={index}>
                 <div className="history">
                   <p className="date">
-                    {moment(item.date).format("DD/MM/YYYY")}
+                    {moment(item.date).format("DD MMMM YYYY")}
                   </p>
                   <p className="amount">{item.amount.toLocaleString()}</p>
                 </div>
