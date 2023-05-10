@@ -4,4 +4,5 @@ export type PopupType =
   | "Message"
   | "Login"
   | "Return"
+  | "History"
   | null;

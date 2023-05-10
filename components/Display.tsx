@@ -6,13 +6,15 @@ import useReturnLoanStore from "@/stores/returnLoan";
 import useAuthStore from "@/stores/auth";
 import useLoansStore from "@/stores/loans";
 import moment from "moment";
-import { SendType } from "./utils/form/Form";
 import PostButton from "./utils/PostButton";
+import useHistoryStore from "@/stores/history";
+import sumLoan from "@/lib/sumLoan";
 
 export default function Display() {
   const [localLoans, setLocalLoans] = useState<LoanType[]>([]);
   const { openPopup } = usePopupStore((state) => state);
   const { setReturnLoan } = useReturnLoanStore((state) => state);
+  const { setHistory } = useHistoryStore((state) => state);
   const { loans } = useLoansStore((state) => state);
   const { username, password } = useAuthStore((state) => state);
   const router = useRouter();
@@ -49,10 +51,13 @@ export default function Display() {
           Took from me <span className="took"></span>
         </p>
         <p>
-          Returned <span className="returned"></span>
+          Full Returned <span className="returned"></span>
         </p>
         <p>
           Took from them <span className="gave"></span>
+        </p>
+        <p>
+          Partially Returned <span className="partially-returned"></span>
         </p>
       </div>
 
@@ -63,7 +68,8 @@ export default function Display() {
             <th>Date</th>
             <th>Why</th>
             <th>Amount</th>
-            <th>Return Date</th>
+            <th>Returns</th>
+            <th>Need to Return</th>
             <th>Options</th>
           </tr>
         </thead>
@@ -72,7 +78,13 @@ export default function Display() {
             <tr
               key={index}
               className={
-                loan.returnDate ? "returned" : loan.amount > 0 ? "took" : "gave"
+                loan.returns.length > 0
+                  ? sumLoan(loan.returns) === loan.amount
+                    ? "returned"
+                    : "partially-returned"
+                  : loan.amount > 0
+                  ? "took"
+                  : "gave"
               }
             >
               {user === "All" && <td className="name">{loan.user.name}</td>}
@@ -81,22 +93,71 @@ export default function Display() {
               </td>
               <td className="why">{loan.why}</td>
               <td className="amount">{loan.amount.toLocaleString()}</td>
-              <td className="returnDate">
-                {loan.returnDate
+              <td className="return">
+                {/* {loan.returnDate
                   ? moment(loan.returnDate).format("DD MMMM YYYY")
-                  : "Not Returned :("}
+                  : "Not Returned :("} */}
+                {loan.returns.length > 0 ? (
+                  <>
+                    {/* now sum of returns.amout */}
+                    <p className="amount">
+                      {/* {loan.returns
+                        .reduce((acc, curr) => acc + curr.amount, 0)
+                        .toLocaleString()} */}
+                      {sumLoan(loan.returns).toLocaleString()}
+                    </p>
+                    <button
+                      className="btn blue"
+                      onClick={() => {
+                        setHistory(loan.returns);
+                        openPopup("History");
+                      }}
+                    >
+                      History
+                    </button>
+                  </>
+                ) : (
+                  "Not Returned :("
+                )}
               </td>
+              <td className="need-to-return">
+                {loan.returns.length > 0 ? (
+                  <>
+                    {/* now sum of returns.amout */}
+
+                    {/* {loan.returns
+                        .reduce((acc, curr) => acc + curr.amount, 0)
+                        .toLocaleString()} */}
+                    {/* {sumLoan(loan.returns).toLocaleString()} */}
+                    {(loan.amount - sumLoan(loan.returns)).toLocaleString()}
+                  </>
+                ) : (
+                  loan.amount.toLocaleString()
+                )}
+              </td>
+
               <td className="options">
                 <div className="inner-options">
-                  <button
-                    className="return btn skyblue"
-                    onClick={() => {
-                      setReturnLoan(loan);
-                      openPopup("Return");
-                    }}
-                  >
-                    Return
-                  </button>
+                  {
+                    // if the loan is returned, then don't show the return button
+                    loan.returns.length > 0 &&
+                    // calculate the sum of returns.amount
+                    // if the sum is equal to the loan.amount, then don't show the return button
+                    // else show the return button
+                    // loan.returns.reduce((acc, curr) => acc + curr.amount, 0) ===
+                    //   loan.amount ? null : (
+                    sumLoan(loan.returns) === loan.amount ? null : (
+                      <button
+                        className="return btn skyblue"
+                        onClick={() => {
+                          setReturnLoan(loan);
+                          openPopup("Return");
+                        }}
+                      >
+                        Return
+                      </button>
+                    )
+                  }
 
                   <PostButton
                     body={{ loanId: loan._id, username, password }}

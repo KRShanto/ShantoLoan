@@ -3,12 +3,13 @@ import dbConnect from "../../lib/dbConnect";
 import response from "@/lib/response";
 import Loan from "@/models/loan";
 import checkUser from "@/lib/checkUser";
+import sumLoan from "@/lib/sumLoan";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { loanId, returnDate, username, password } = req.body;
+  const { loanId, date, amount, username, password } = req.body;
   await dbConnect();
 
   // Check if the user has access
@@ -28,11 +29,41 @@ export default async function handler(
   }
 
   // Check if the loan exists
-  const loanExists = await Loan.exists({ _id: loanId });
-  if (!loanExists) {
+  // const loanExists = await Loan.exists({ _id: loanId });
+  // if (!loanExists) {
+  //   return response(res, {
+  //     type: "INVALID",
+  //     msg: "Loan doesn't exist",
+  //   });
+  // }
+
+  const loan = await Loan.findOne({ _id: loanId });
+  if (!loan) {
     return response(res, {
       type: "INVALID",
       msg: "Loan doesn't exist",
+    });
+  }
+
+  // convert the amount to number
+  const amountNumber = Number(amount);
+
+  // Check if the loan's amount is greater than the amount to be returned
+  // Also sum up the total amount of returns
+
+  const totalReturns = sumLoan(loan.returns);
+  console.log("amount: ", amount);
+  console.log("Total: ", totalReturns + amount);
+  console.log("Loan: ", loan.amount);
+
+  console.log("Type of amount: ", typeof amount);
+  console.log("Type of total: ", typeof totalReturns);
+  console.log("Type of loan: ", typeof loan.amount);
+
+  if (totalReturns + amountNumber > loan.amount) {
+    return response(res, {
+      type: "INVALID",
+      msg: "Interest is haaram brother! Fear Allah!",
     });
   }
 
@@ -40,7 +71,8 @@ export default async function handler(
     // update and get the updated document
     const loan = await Loan.findOneAndUpdate(
       { _id: loanId },
-      { returnDate },
+      // { returnDate },
+      { $push: { returns: { amount: amountNumber, date } } },
       { new: true }
     );
 

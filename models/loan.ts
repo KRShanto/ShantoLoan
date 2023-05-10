@@ -9,7 +9,13 @@ const loanSchema = new Schema<LoanType>({
     _id: { type: String, required: true },
     name: { type: String, required: true },
   },
-  returnDate: { type: Date, required: false },
+  // returnDate: { type: Date, required: false },
+  returns: [
+    {
+      amount: { type: Number, required: true },
+      date: { type: Date, required: true },
+    },
+  ],
 });
 
 const Loan =

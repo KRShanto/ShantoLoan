@@ -5,6 +5,7 @@ import Create from "./Create";
 import Message from "./utils/Message";
 import Login from "./Login";
 import Return from "./Return";
+import History from "./History";
 
 export default function Popup() {
   const { popup } = usePopupStore((state) => state);
@@ -17,6 +18,7 @@ export default function Popup() {
       {popup === "Message" && <Message msg={message.msg} type={message.type} />}
       {popup === "Login" && <Login />}
       {popup === "Return" && <Return />}
+      {popup === "History" && <History />}
     </>
   );
 }

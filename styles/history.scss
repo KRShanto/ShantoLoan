@@ -1,0 +1,33 @@
+.history-section {
+  // border: 2px solid green;
+  width: 30rem;
+  height: 25rem;
+  font-size: 1.5rem;
+  font-family: "Josefin Sans", sans-serif;
+
+  .history-parent {
+    // border: 2px solid red;
+    height: 75%;
+    overflow-y: scroll;
+  }
+
+  .heading {
+    font-family: sans-serif;
+    text-align: center;
+  }
+
+  .history {
+    // border: 1px solid red;
+    // margin: 1rem;
+    // padding: 1rem;
+    // font-size: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+  }
+
+  .header {
+    font-weight: bold;
+  }
+}
