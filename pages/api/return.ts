@@ -60,13 +60,6 @@ export default async function handler(
   console.log("Type of total: ", typeof totalReturns);
   console.log("Type of loan: ", typeof loan.amount);
 
-  if (totalReturns + amountNumber > loan.amount) {
-    return response(res, {
-      type: "INVALID",
-      msg: "Interest is haaram brother! Fear Allah!",
-    });
-  }
-
   try {
     // update and get the updated document
     const loan = await Loan.findOneAndUpdate(
